@@ -1,0 +1,25 @@
+x_input = [0.4, 0.6  , 0.2]
+w_weights = [0.8, 0.3, 0.4]
+threshold = 0.3
+def step (weighted_sum):
+  if weighted_sum > threshold :
+    return 1
+  else: 
+    return 0
+def perceptron():
+  weighted_sum = 0 
+  for x,w in zip(x_input,w_weights):
+    weighted_sum += x*w
+    print(weighted_sum)
+  return step(weighted_sum)
+output = perceptron()
+print('output:' + str(output))
+import numpy as np
+import matplotlib.pyplot as plt
+x_vals = 0.6
+w_vals = 0.3
+weighted_sums = x_vals * w_vals
+plt.scatter(weighted_sums, threshold)
+plt.axhline(y=threshold, color='r')
+plt.xlabel("sum")
+plt.ylabel("thres")

@@ -1,0 +1,38 @@
+import numpy as np
+inputs = [[0, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 0, 0, 0]]
+roh = 0.4
+m = 3
+buw = 1/(1+len(inputs[0]))
+tdw = 1
+buwarr = np.zeros((len(inputs[0]), m))
+buwarr[buwarr == 0] = buw
+tdwarr = np.zeros((m, len(inputs[0])))
+tdwarr[tdwarr == 0] = tdw
+index = 0
+print("Input -> Cluster")
+while True:
+    
+    if index <=len(inputs)-1:   
+        norm_s = sum(inputs[index])
+        oplayer = []
+        
+        oplayer.sort()
+        for column in buwarr.T:
+            oplayer.append(sum(inputs[index]*column))
+    
+        j = np.where(oplayer == max(oplayer))[0][0]
+    
+        x = inputs[index]*tdwarr[j]
+    
+        norm_x = sum(x)
+        
+        reset = norm_x/norm_s
+        
+        if reset >= roh:
+            tdwarr[j] = tdwarr[j] * inputs[index]
+            buwarr.T[j] = tdwarr[j] / (0.5+sum(tdwarr[j]))
+            print(inputs[index], "->", j)
+            index += 1
+        
+    else:
+        break
